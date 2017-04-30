@@ -47,7 +47,6 @@ def getOrderDetailsDE(number, email):
 		for item in items:
 			status = item.find('div', {'class': 'order-step-content-wrp'})
 			status = (status.text).strip()
-			print(status)
 		if str(status) == "Order confirmed, waiting to be packed":
 			print("Order {} for {} is confirmed and waiting to be packed".format(number, email))
 			confirmed_orders.append(number)
