@@ -1,7 +1,7 @@
 # adidas-order-checker
 Checks the status of adidas online orders
 
-At the moment this only works for adidas UK and US. If someone can provide me with an order # and email for their locale then I can add support for it :)
+At the moment this only works for adidas UK, US and DE. If someone can provide me with an order # and email for their locale then I can add support for it :)
 
 Instructions:
 - Git clone into the repository or download the zip file
