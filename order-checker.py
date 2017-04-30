@@ -74,3 +74,4 @@ if count > 5:
 	print("\nYou have {} confirmed orders, coooook!".format(count))
 else:
 	print("\nYou have {} confirmed orders!".format(count))
+input("\npress enter to close...")
