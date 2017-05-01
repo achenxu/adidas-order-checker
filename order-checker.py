@@ -61,6 +61,34 @@ def getOrderDetailsDE(number, email):
 	except:
 		print("Order {} for {} has not shipped or is an invalid input".format(number, email))
 
+def getOrderDetailsCZ(number, email):
+	r = s.get("https://www.adidas.cz/sledovani-objednavek", headers=headers)
+	soup = bs(r.content, "html.parser")
+	url = soup.find('form', {'id': 'dwfrm_ordersignup'})['action']
+	data = {'dwfrm_ordersignup_orderNo': number,
+	'dwfrm_ordersignup_email': email,
+	'dwfrm_ordersignup_signup': 'ZOBRAZIT OBJEDNÁVKU'}
+	r = s.post(url, data=data, headers=headers)
+	soup = bs(r.content, "html.parser")
+	try:
+		items = soup.find_all('div', {'class': 'order-step selected'})
+		for item in items:
+			status = item.find('div', {'class': 'order-step-content-wrp'})
+			status = (status.text).strip()
+		if str(status) == "Platba potvrzena, čeká na zabalení":
+			print("Order {} for {} is confirmed and waiting to be packed".format(number, email))
+			confirmed_orders.append(number)
+		elif "Odesláno" in str(status):
+			print("Order {} for {} has been shipped and is on its way to you!".format(number, email))
+			confirmed_orders.append(number)
+		elif str(status) == "Příprava zásilky":
+			print("Order {} for {} is being prepared for shipping".format(number, email))
+			confirmed_orders.append(number)
+		elif str(status) == "Zpracování objednávek":
+			print("Order {} for {} has not been confirmed yet and is still processing".format(number, email))
+	except:
+		print("Order {} for {} has not shipped or is an invalid input".format(number, email))
+
 def getOrderDetailsUS(number, email):
 	r = s.get("https://www.adidas.com/us/order-tracker", headers=headers)
 	soup = bs(r.content, "html.parser")
@@ -94,7 +122,7 @@ def getOrderDetailsUS(number, email):
 s = requests.Session()
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
 'Origin': 'http://www.adidas.co.uk'}
-locale = input("LOCALE (US/UK/DE):	")
+locale = input("LOCALE (US/UK/DE/CZ):	")
 confirmed_orders = []
 f = open("orders.txt", "r")
 for item in f.read().splitlines():
@@ -104,6 +132,8 @@ for item in f.read().splitlines():
 			getOrderDetailsUK(parts[0], parts[1])
 		elif locale.upper() == "DE":
 			getOrderDetailsDE(parts[0], parts[1])
+		elif locale.upper() == "CZ":
+			getOrderDetailsCZ(parts[0], parts[1])
 		else:
 			getOrderDetailsUS(parts[0], parts[1])
 f.close()
