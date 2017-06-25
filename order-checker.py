@@ -121,33 +121,30 @@ def getOrderDetailsUS(number, email):
 
 
 
-s = requests.Session()
-headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
-'Origin': 'http://www.adidas.co.uk'}
-locale = input("LOCALE (US/UK/DE/FR):	")
-confirmed_orders = []
-shipped_orders = []
-f = open("orders.txt", "r")
-for item in f.read().splitlines():
-	if not item == '':
-		parts = item.split(":")
-		if locale.upper() == "UK":
-			getOrderDetailsUK(parts[0], parts[1])
-		elif locale.upper() == "DE":
-			getOrderDetailsDE(parts[0], parts[1])
-		elif locale.upper() == "FR":
-			getOrderDetailsFR(parts[0], parts[1])
-		else:
-			getOrderDetailsUS(parts[0], parts[1])
-f.close()
-count = len(confirmed_orders)
-if count > 5:
-	print("\nYou have {} confirmed orders, coooook!".format(count))
-else:
+if __name__ == '__main__':
+	print("Adidas Order Checker [@therealchefuk]")
+	s = requests.Session()
+	headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+	'Origin': 'http://www.adidas.co.uk'}
+	locale = input("\nLOCALE (US/UK/DE/FR):	").upper()
+	print("")
+	confirmed_orders = []
+	shipped_orders = []
+	f = open("orders.txt", "r")
+	for item in f.read().splitlines():
+		if not item == '':
+			parts = item.split(":")
+			if locale == "UK":
+				getOrderDetailsUK(parts[0], parts[1])
+			elif locale == "DE":
+				getOrderDetailsDE(parts[0], parts[1])
+			elif locale == "FR":
+				getOrderDetailsFR(parts[0], parts[1])
+			elif locale == "US":
+				getOrderDetailsUS(parts[0], parts[1])
+	f.close()
+	count = len(confirmed_orders)
 	print("\nYou have {} confirmed orders!".format(count))
-count = len(shipped_orders)
-if count > 5:
-	print("\nYou have {} confirmed orders that have shipped, coooook!".format(count))
-else:
-	print("\nYou have {} confirmed orders that have shipped!".format(count))
-input("\npress enter to close...")
+	count = len(shipped_orders)
+	print("You have {} confirmed orders that have shipped!".format(count))
+	input("\npress enter to close...")
