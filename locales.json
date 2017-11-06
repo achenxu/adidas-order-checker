@@ -1,0 +1,49 @@
+{
+	"regions":
+
+	[
+		{
+			"region": "gb",
+			"domain": ".co.uk",
+			"endpoint": "/order-tracker",
+			"command": "VIEW ORDER",
+			"step1": "Order processing",
+			"step2": "Order confirmed, waiting to be packed",
+			"step3": "Preparing shipment",
+			"step4": "Shipped"
+		},
+
+		{
+			"region": "fr",
+			"domain": ".fr",
+			"endpoint": "/suivi-commande",
+			"command": "VOIR MA COMMANDE",
+			"step1": "Commande en cours de traitement",
+			"step2": "Commande confirmée, en attente d'être préparée",
+			"step3": "Expédition en cours de préparation",
+			"step4": "Expédiée"
+		},
+
+		{
+			"region": "de",
+			"domain": ".de",
+			"endpoint": "/bestellverfolgung",
+			"command": "BESTELLUNG ANSEHEN",
+			"step1": "Bestellung wird bearbeitet",
+			"step2": "Bestellung bestätigt, wird bald verpackt",
+			"step3": "Der Versand wird vorbereitet",
+			"step4": "Verschickt"
+		},
+
+		{
+			"region": "us",
+			"domain": ".com/us",
+			"endpoint": "/order-tracker",
+			"command": "Track order",
+			"step1": "Order processing",
+			"step2": "Order confirmed, waiting to be packed",
+			"step3": "Preparing shipment",
+			"step4": "Shipped"
+		}
+	]
+}
