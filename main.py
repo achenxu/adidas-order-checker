@@ -25,7 +25,8 @@ class Checker():
 	def check_order(self, order):
 		number = order.split(':')[0]
 		email = order.split(':')[1]
-		r = requests.get('https://www.adidas{}{}'.format(self.domain, self.endpoint), headers=self.headers)
+		s = requests.Session()
+		r = s.get('https://www.adidas{}{}'.format(self.domain, self.endpoint), headers=self.headers)
 		soup = bs(r.content, "html.parser")
 		url = soup.find('form', {'id': 'dwfrm_ordersignup'})['action']
 		data = {
@@ -33,7 +34,7 @@ class Checker():
 			'dwfrm_ordersignup_email': email,
 			'dwfrm_ordersignup_signup': self.command
 		}
-		r = requests.post(url, data=data, headers=self.headers)
+		r = s.post(url, data=data, headers=self.headers)
 		soup = bs(r.content, "html.parser")
 		try:
 			items = soup.find_all('div', {'class': 'order-step selected'})
