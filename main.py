@@ -33,7 +33,7 @@ class Checker():
 			'dwfrm_ordersignup_email': email,
 			'dwfrm_ordersignup_signup': self.command
 		}
-		r = s.post(url, data=data, headers=self.headers)
+		r = requests.post(url, data=data, headers=self.headers)
 		soup = bs(r.content, "html.parser")
 		try:
 			items = soup.find_all('div', {'class': 'order-step selected'})
